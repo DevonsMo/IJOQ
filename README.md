@@ -1,1 +1,3 @@
 # IJOQ
+This repository contains the Python scripts used in the paper, "Dynamic Python-based method provides robust analysis of intercellular junction organization during *S. pneumoniae* infection of the respiratory epithelium." More specifically, it contains the set-up script (IJOQ setup.py), the calibration script (IJOQ calibration.py), and the IJOQ script (IJOQ.py). The project is released under the GNU General Public License 3. In brief, users are free to download, share, and modify any and all parts of this project; however, any projects derived from the IJOQ project must also be released under the GNU General Public License as well. The repository is maintained by Devons Mo.
+
