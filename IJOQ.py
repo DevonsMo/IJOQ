@@ -1,4 +1,4 @@
-# Version 0.14 (Updated 12/18/2021)
+# Version 0.14.1 (Updated 1/13/2022)
 # Made by Devons Mo
 
 # Variables
@@ -295,4 +295,4 @@ else:
             print("\nData saved to: " + save_location + data_file_name)
 
     # Keep program open until user gives an input
-    input()
+    input("Press enter to finish")
