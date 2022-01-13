@@ -1,4 +1,4 @@
-# Version 0.3 (Updated 12/18/2021)
+# Version 0.3.1 (Updated 1/13/2022)
 # Made by Devons Mo
 
 # Variables
@@ -360,4 +360,4 @@ else:
 
 
 # Keep program open until user gives an input
-input()
+input("Press enter to finish")
