@@ -76,7 +76,7 @@ else:
                               "The response is taken as a percentage (i.e. 0.1 = 10%)\n"
                               "Consider lowering this number if the output is removing too many cell borders. "
                               "Alternately, if you are noticing too much noise remaining, "
-                              "consider increasing this number."
+                              "consider increasing this number.\n"
                               "(Default: 0.1)\n"))
         response.append(input("During IJOQ analysis, lines will be traced throughout the image.\n"
                               "How many lines should be drawn?\n"
