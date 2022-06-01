@@ -1093,7 +1093,7 @@ else:
         if folder_path:
 
             # Make new folder if no save folder exists
-            save_path = folder_path + "\\Settings_Output\\"
+            save_path = folder_path + "\\Analysis_Output\\"
             if not path.isdir(save_path):
                 mkdir(save_path)
 
