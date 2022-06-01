@@ -1,7 +1,7 @@
 # Devons Mo and Shane Nicole Homez 5/29/2022
 # Global variables
 valid_image_types = (".png", ".jpg", ".jpeg", ".tif", ".tiff")
-current_version = "v1.0.1"
+current_version = "v1.0.2"
 
 # Tries to import the required modules
 # and reports an error if the program is unable to open up the required modules
@@ -260,15 +260,19 @@ else:
     # Validates input for spinboxes (for floats)
     def validate_input_float(new_input):
         has_period = False
+        is_first_char = True
         for char in new_input:
             if not char.isdecimal():
-                if char == ".":
-                    if has_period:
-                        return False
-                    else:
-                        has_period = True
+                # If character is a period (and it is the only period), then it is acceptable
+                if char == "." and not has_period:
+                    has_period = True
+                # If character is a minus, and it is the first character in the input, then it is acceptable
+                elif char == "-" and is_first_char:
+                    pass
                 else:
                     return False
+
+            is_first_char = False
         return True
 
     # Prevents invalid inputs
@@ -311,8 +315,8 @@ else:
                 else:
                     sanitized_input += char
 
-            # Exception is if 0 is the only digit
-            if sanitized_input == "":
+            # Exception is if 0 or - is the only digit
+            if sanitized_input == "" or sanitized_input == "-":
                 sanitized_input = "0"
 
             # Ensure input is within bounds
@@ -354,6 +358,8 @@ else:
                 cal_confirmed_blur_radius = 10
             else:
                 cal_confirmed_blur_radius = min(round(50 / average_cell_count), 10)
+                if average_cell_count > 50:
+                    cal_confirmed_blur_radius *= 2
             cal_confirmed_pixel_number = 8
             cal_confirmed_noise_filter = 0.1
             cal_confirmed_line_number = max(10, int(round(average_cell_count, -1)))
@@ -799,15 +805,25 @@ else:
 
         # Update the label text
         settings_values = cal_results_settings_value_label.cget("text").split("\n")
-        settings_values[5] = str(new_noise_filter)
+        settings_values[6] = str(new_noise_filter)
         cal_results_settings_value_label["text"] = "\n".join(settings_values)
+
+    def cal_results_spinbox_update(_):
+        sanitize_input(cal_results_noise_filter, "float", -0.5, 0.5)
+        cal_update_noise_filter(float(cal_results_noise_filter.get()))
 
     def cal_save_settings():
         folder_path = filedialog.askdirectory()
 
         # If user did not press cancel
         if folder_path:
-            with open(folder_path + "\\Settings " + current_version + ".txt", mode="w") as settings_file:
+
+            # Make new folder if no save folder exists
+            save_path = folder_path + "\\Settings_Output\\"
+            if not path.isdir(save_path):
+                mkdir(save_path)
+
+            with open(save_path + "Settings " + current_version + ".txt", mode="w") as settings_file:
                 settings_file.write(
                     f"compressed_image_size = {cal_confirmed_image_compression}\n"
                     f"channel = {cal_confirmed_channel}\n"
@@ -821,7 +837,7 @@ else:
             for i in range(len(cal_processed_files)):
                 image_name = ".".join(cal_confirmed_file_names[i].split(".")[:-1])
                 image = cal_processed_files[i]
-                image.save(folder_path + "\\" + image_name + "_processed.png")
+                image.save(save_path + image_name + "_processed.png")
 
     def anl_add_settings():
         global anl_image_compression, anl_channel_selection, anl_blur_radius, anl_section_number, anl_pixel_number, \
@@ -1075,7 +1091,13 @@ else:
 
         # If user did not press cancel
         if folder_path:
-            with open(folder_path + "\\IJOQ Results " + current_version + ".csv", mode="w") as results_file:
+
+            # Make new folder if no save folder exists
+            save_path = folder_path + "\\Settings_Output\\"
+            if not path.isdir(save_path):
+                mkdir(save_path)
+
+            with open(save_path + "IJOQ Results " + current_version + ".csv", mode="w") as results_file:
                 data_writer = csv.writer(results_file)
                 data_writer.writerow(["File name", "IJOQ"])
                 for i in range(len(anl_confirmed_files)):
@@ -1084,13 +1106,13 @@ else:
             for i in range(len(anl_processed_files)):
                 image_name = ".".join(anl_confirmed_file_names[i].split(".")[:-1])
                 image = anl_processed_files[i]
-                image.save(folder_path + "\\" + image_name + "_processed.png")
+                image.save(save_path + image_name + "_processed.png")
 
 
     # Opens up tkinter, set up window
     root = tkinter.Tk()
-    root.geometry("600x400")
-    root.minsize(600, 400)
+    root.geometry("750x500")
+    root.minsize(750, 500)
     root.title("IJOQ " + current_version)
 
     # Styles
@@ -1621,7 +1643,7 @@ else:
         validate="key", validatecommand=vcmd_float)
     cal_results_settings_noise_spinbox.bind(
         "<FocusOut>",
-        lambda e: sanitize_input(cal_results_noise_filter, "float", -0.5, 0.5))
+        cal_results_spinbox_update)
     cal_results_settings_noise_spinbox.bind(
         "<Return>",
         lambda e: root.focus())
@@ -1657,7 +1679,7 @@ else:
 
     analysis_side_tabs.add(anl_select_frame, text=f'{"1. Select images":^25s}')
     analysis_side_tabs.add(anl_settings_frame, text=f'{"2. Select settings":^25s}')
-    analysis_side_tabs.add(anl_analysis_frame, text=f'{"3. Calibration":^25s}')
+    analysis_side_tabs.add(anl_analysis_frame, text=f'{"3. Analysis":^25s}')
     analysis_side_tabs.add(anl_results_frame, text=f'{"4. View Results":^25s}')
     analysis_side_tabs.tab(1, state="disabled")
     analysis_side_tabs.tab(2, state="disabled")
