@@ -1,4 +1,4 @@
-# Devons Mo and Shane Nicole Homez 5/29/2022
+# Devons Mo and Shane Nicole Homez 6/1/2022
 # Global variables
 valid_image_types = (".png", ".jpg", ".jpeg", ".tif", ".tiff")
 current_version = "v1.0.2"
