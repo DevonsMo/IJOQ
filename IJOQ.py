@@ -1,7 +1,7 @@
 # Devons Mo and Shane Nicole Homez 6/11/2022
 # Global variables
 valid_image_types = (".png", ".jpg", ".jpeg", ".tif", ".tiff")
-current_version = "v1.2.0"
+current_version = "v1.2.1"
 min_python_version = "3.10"
 
 # Tries to import the required modules
@@ -375,7 +375,8 @@ else:
     def cal_go_to_calibration():
         global cal_confirmed_image_compression, cal_confirmed_channel, cal_confirmed_blur_radius, \
             cal_confirmed_section_number, cal_confirmed_pixel_number, cal_confirmed_noise_filter, \
-            cal_confirmed_line_number, cal_blurred_images, cal_brightness_maps, cal_processed_files
+            cal_confirmed_line_number, cal_blurred_images, cal_normalization_thresholds, \
+            cal_brightness_maps, cal_processed_files
 
         # Check for existing noise filter calculation threads. If previous threads exist, prompt them to stop
         if cal_noise_filter_threads:
@@ -438,6 +439,7 @@ else:
 
         # Set progress bar to 0, delete text in textbox, and clear results
         cal_blurred_images = []
+        cal_normalization_thresholds = []
         cal_brightness_maps = []
         cal_processed_files = []
         progress_bar_maximum = (len(cal_confirmed_files) * (13 + (12 * (cal_confirmed_section_number**2)))) + 6
