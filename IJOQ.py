@@ -1,7 +1,7 @@
-# Devons Mo and Shane Nicole Homez 7/12/2022
+# Devons Mo and Shane Nicole Homez 7/32/2022
 # Global variables
 valid_image_types = (".png", ".jpg", ".jpeg", ".tif", ".tiff")
-current_version = "v1.2.2"
+current_version = "v1.2.3"
 
 # Tries to import the required modules
 # and reports an error if the program is unable to open up the required modules
@@ -1719,7 +1719,7 @@ else:
         cal_results_settings_frame, from_=0, to=10, increment=2,
         wrap=True, textvariable=cal_results_blur_radius, width=6,
         command=lambda: cal_update_results(int(cal_results_blur_radius.get()), cal_confirmed_noise_filter),
-        validate="key", validatecommand=vcmd_float)
+        validate="key", validatecommand=vcmd_int)
     cal_results_settings_blur_spinbox.bind(
         "<FocusOut>",
         cal_results_blur_spinbox_update)
