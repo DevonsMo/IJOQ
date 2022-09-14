@@ -1,7 +1,7 @@
 # Devons Mo and Shane Nicole Homez 9/14/2022
 # Global variables
 valid_image_types = (".png", ".jpg", ".jpeg", ".tif", ".tiff")
-current_version = "v1.2.4"
+current_version = "v1.2.5"
 
 # Tries to import the required modules
 # and reports an error if the program is unable to open up the required modules
