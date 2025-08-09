@@ -1,7 +1,7 @@
 # Devons Mo and Shane Nicole Homez 1/11/2023
 # Global variables
 valid_image_types = (".png", ".jpg", ".jpeg", ".tif", ".tiff")
-current_version = "v1.2.8"
+current_version = "v1.2.9"
 
 # Tries to import the required modules
 # and reports an error if the program is unable to open up the required modules
@@ -9,14 +9,17 @@ try:
     import csv
     from math import floor
     import numpy
+    import os
     from os import path, mkdir, walk
     from PIL import Image, ImageFilter, ImageTk
     from threading import Thread
     import tkinter
     from tkinter import filedialog, ttk, messagebox
-except ImportError:
+except ImportError as e:
     print("You may be missing a required library! "
-          "Be sure to run the IJOQ Setup before running this program!")
+          "Be sure to run the IJOQ Setup before running this program!"
+          "Please see below message for missing packages: ")
+    print(e)
     input()
 
 # Import is successful
@@ -1265,9 +1268,11 @@ else:
 
     # Opens up tkinter, set up window
     root = tkinter.Tk()
-    root.geometry("750x500")
+    root.geometry("800x600")
     root.minsize(750, 500)
     root.title("IJOQ " + current_version)
+    icon = tkinter.PhotoImage(file = f"{"/".join(__file__.split("/")[:-1])}/IJOQ_icon.png")
+    root.iconphoto(False, icon)
 
     # Styles
     centered_tab_style = ttk.Style()
@@ -1558,12 +1563,12 @@ else:
         "<Return>",
         lambda e: root.focus())
     cal_settings_section_number_spinbox = ttk.Spinbox(
-        cal_settings_advanced_frame, from_=0, to=10,
+        cal_settings_advanced_frame, from_=0, to=50,
         wrap=True, textvariable=cal_section_number, width=6,
         validate="key", validatecommand=vcmd_int)
     cal_settings_section_number_spinbox.bind(
         "<FocusOut>",
-        lambda e: sanitize_input(cal_section_number, False, "int", 0, 10))
+        lambda e: sanitize_input(cal_section_number, False, "int", 0, 50))
     cal_settings_section_number_spinbox.bind(
         "<Return>",
         lambda e: root.focus())
@@ -1696,8 +1701,8 @@ else:
         master=cal_results_frame,
         text="If the basic settings were selected, "
              "the calibration settings were estimated to the best of the program's abilities. "
-             "Please review the processed images and ensure that the calibration is "
-             "adequately thresholding the images.\n\n"
+             "Please review the processed images and ensure that the identified "
+             "junctions are smooth and the noise filter is as high as possible without removing junctions. \n\n"
              "You may edit the blur radius and the noise threshold at the bottom right "
              "to make adjustments to the calibration settings before saving. "
              "It may take a moment for the image to update after adjusting the blur radius or noise threshold.")
