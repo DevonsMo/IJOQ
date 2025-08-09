@@ -1,10 +1,7 @@
-# Version 0.2.0 (Updated 6/11/2022)
-# Made by Devons Mo
-
 import subprocess
 import sys
 
-required_library = ("numpy", "pillow")
+required_library = ("numpy", "pillow", "requests")
 
 subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", "pip"])
 

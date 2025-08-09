@@ -1,8 +1,8 @@
 #!/bin/bash
 
 python3 -m venv ~/IJOQ-venv
-pkexec apt install python3-tk
-~/IJOQ-venv/bin/pip install "pillow" "numpy"
+pkexec apt install python3-venv python3-tk
+~/IJOQ-venv/bin/pip install "pillow" "numpy" "requests"
 
 echo "[Desktop Entry]
 Comment=

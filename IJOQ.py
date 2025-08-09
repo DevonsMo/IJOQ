@@ -1,7 +1,7 @@
 # Devons Mo and Shane Nicole Homez 1/11/2023
 # Global variables
 valid_image_types = (".png", ".jpg", ".jpeg", ".tif", ".tiff")
-current_version = "v1.2.9"
+current_version = "v1.2.10"
 
 # Tries to import the required modules
 # and reports an error if the program is unable to open up the required modules
@@ -12,13 +12,14 @@ try:
     import os
     from os import path, mkdir, walk
     from PIL import Image, ImageFilter, ImageTk
+    import requests
     from threading import Thread
     import tkinter
     from tkinter import filedialog, ttk, messagebox
 except ImportError as e:
     print("You may be missing a required library! "
-          "Be sure to run the IJOQ Setup before running this program!"
-          "Please see below message for missing packages: ")
+          "Be sure to run the IJOQ Setup before running this program! "
+          "Please see below message for missing packages: \n")
     print(e)
     input()
 
@@ -1271,8 +1272,20 @@ else:
     root.geometry("800x600")
     root.minsize(750, 500)
     root.title("IJOQ " + current_version)
-    icon = tkinter.PhotoImage(file = f"{"/".join(__file__.split("/")[:-1])}/IJOQ_icon.png")
+    icon = tkinter.PhotoImage(file = f"{'/'.join(__file__.split('/')[:-1])}/IJOQ_icon.png")
     root.iconphoto(False, icon)
+
+    # Check for updates
+    latest_version_link = requests.get("https://github.com/DevonsMo/IJOQ/releases/latest")
+    latest_version = latest_version_link.url.split("/")[-1]
+
+    if current_version != latest_version:
+        messagebox.showinfo(
+            "New update found!",
+            "A new update has been released. "
+            "Please download the new version at https://github.com/DevonsMo/IJOQ/releases/latest\n\n"
+            f"Latest version: {latest_version}"
+        )
 
     # Styles
     centered_tab_style = ttk.Style()
