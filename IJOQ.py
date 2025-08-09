@@ -1568,7 +1568,7 @@ else:
         validate="key", validatecommand=vcmd_int)
     cal_settings_section_number_spinbox.bind(
         "<FocusOut>",
-        lambda e: sanitize_input(cal_section_number, False, "int", 0, 50))
+        lambda e: sanitize_input(cal_section_number, False, "int", 0, 10))
     cal_settings_section_number_spinbox.bind(
         "<Return>",
         lambda e: root.focus())
