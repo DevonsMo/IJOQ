@@ -1,4 +1,4 @@
-# Devons Mo and Shane Nicole Homez 1/11/2023
+# Devons Mo and Shane Nicole Homez 9/3/2025
 # Global variables
 valid_image_types = (".png", ".jpg", ".jpeg", ".tif", ".tiff")
 current_version = "v1.3.0"
@@ -50,3 +50,4 @@ if __name__ == "__main__":
                                  f"Latest version: {latest_version}")
 
         Backend.gui_start()
+
