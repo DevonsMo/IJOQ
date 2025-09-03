@@ -11,7 +11,6 @@ if not is_installed:
                     "Type \"install\" to confirm. Otherwise, type \"quit\" to exit: ")
 
     while confirm != "install" and confirm != "quit":
-        print(confirm)
         confirm = input("Unexpected input. Please type either \"install\" or \"quit\": ")
 
     if confirm == "install":
@@ -30,3 +29,4 @@ else:
 
     if confirm == "uninstall":
         Pacman.uninstall(working_directory)
+
