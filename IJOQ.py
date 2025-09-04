@@ -1,7 +1,7 @@
 # Devons Mo and Shane Nicole Homez 9/3/2025
 # Global variables
 valid_image_types = (".png", ".jpg", ".jpeg", ".tif", ".tiff")
-current_version = "v1.3.0"
+current_version = "v1.3.1"
 
 # Initialize program
 if __name__ == "__main__":
@@ -18,7 +18,7 @@ if __name__ == "__main__":
         import PIL
         import numpy
 
-    except ImportError as e:
+    except (ModuleNotFoundError, ImportError) as e:
 
         # Set error message
         message = ("You may be missing a required library! "
@@ -50,4 +50,3 @@ if __name__ == "__main__":
                                  f"Latest version: {latest_version}")
 
         Backend.gui_start()
-
