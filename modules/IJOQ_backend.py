@@ -1037,7 +1037,7 @@ def cal_results_blur_spinbox_update(_):
     :return: None
     """
     sanitize_input(cal_results_blur_radius, False, "int", 0, 5)
-    cal_update_results(cal_results_blur_radius.get(), cal_confirmed_noise_filter)
+    cal_update_results(int(cal_results_blur_radius.get()), cal_confirmed_noise_filter)
 
 def cal_results_noise_spinbox_update(_):
     """
