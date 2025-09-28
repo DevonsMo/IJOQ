@@ -42,7 +42,7 @@ def check_install():
         # script is run from a venv or not
         try:
             import tkinter
-        except ImportError:
+        except (ModuleNotFoundError, ImportError):
             return False
         else:
 
@@ -75,7 +75,7 @@ def check_install():
             import pillow
             import numpy
             import requests
-        except ImportError:
+        except (ModuleNotFoundError, ImportError):
             return False
         else:
             return True
