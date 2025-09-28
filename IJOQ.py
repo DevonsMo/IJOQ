@@ -1,7 +1,7 @@
 # Devons Mo and Shane Nicole Homez 9/3/2025
 # Global variables
 valid_image_types = (".png", ".jpg", ".jpeg", ".tif", ".tiff")
-current_version = "v1.3.2"
+current_version = "v1.4.0"
 
 # Initialize program
 if __name__ == "__main__":
@@ -10,7 +10,7 @@ if __name__ == "__main__":
     try:
         import requests
         from os import path
-        import modules.IJOQ_backend as Backend
+        import modules.IJOQ_gui as Gui
         import modules.IJOQ_package_manager as Pacman
 
         # Not necessary in here
@@ -33,7 +33,7 @@ if __name__ == "__main__":
         working_directory = path.dirname(path.abspath(__file__))
 
         # Opens up tkinter, set up window, and start IJOQ
-        window = Backend.GuiWindow(800, 600,
+        window = Gui.GuiWindow(800, 600,
                         750, 500,
                         f"IJOQ {current_version}", "IJOQ_icon.png",
                         valid_image_types, current_version, working_directory)
@@ -42,8 +42,8 @@ if __name__ == "__main__":
         latest_version_link = requests.get("https://github.com/DevonsMo/IJOQ/releases/latest")
         latest_version = latest_version_link.url.split("/")[-1]
 
-        if current_version != latest_version:
-            Backend.send_message("New update found!",
+        if current_version != latest_version: # TODO make version detection smarter? (ie don't trigger if version is higher than most updated version)
+            Gui.send_message("New update found!",
                                  "A new update has been released. "
                                  "Please download the new version at "
                                  "https://github.com/DevonsMo/IJOQ/releases/latest\n\n"
