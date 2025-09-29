@@ -8,7 +8,7 @@ The process for setting up IJOQ differs depending on the OS. Please see the belo
 1. First, ensure that Python 3 is installed.
    * On Windows, download and install the latest version of Python 3 from https://www.python.org/downloads/
    * On Mac and Linux, Python 3 should be pre-installed. Go to the next step.
-2. Download the latest version of IJOQ from https://github.com/DevonsMo/IJOQ/releases/latest. Extract the IJOQ files from the .zip file.
+2. Download the latest version of IJOQ from https://github.com/DevonsMo/IJOQ/releases/latest. Extract the IJOQ files from the downloaded file.
 3. Next, run *IJOQ Installer.py* with Python. The script will install all libraries required to run IJOQ: NumPy, Pillow, and Requests. The script will ask for a confirmation before installing. Type "install" then press enter to confirm the install.
    * On Windows, double click the file to run the script.
    * On Mac, double click the file to open the file. In the menu on the top of the screen, click on "Run" to run the script.
