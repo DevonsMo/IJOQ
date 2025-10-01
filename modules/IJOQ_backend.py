@@ -523,7 +523,7 @@ class Calculations:
 
         # Update results tab with new results
         self.confirmed_normal_threshold = self.normalization_thresholds[current_blur_number]
-        self.parent.results_go_to_picture(0, "cal")
+        self.parent.calibration_tab.results_go_to_picture(0)
         self.parent.calibration_tab.cal_results_settings_value_label.config(
             text=f"{self.confirmed_image_compression}\n"
                  f"{self.confirmed_channel}\n"
@@ -753,7 +753,7 @@ class Calculations:
         self.parent.analysis_tab.calculation_textbox.see(tkinter.END)
 
         # Update results tab with new results
-        self.parent.results_go_to_picture(0, "anl")
+        self.parent.analysis_tab.results_go_to_picture(0)
 
         # Re-enable tabs at the conclusion of calibration, then enable the next and previous buttons
         self.parent.analysis_tab.sub_tabs.tab(0, state="normal")
@@ -809,13 +809,13 @@ class NoiseCalculationThread(Thread):
         normalized_image = Image.fromarray(normalized_image_array.astype("uint8"), "HSV").convert("RGB")
         self.calibration.processed_files[self.current_file] = normalized_image
 
-        self.parent.draw_results_image(self.current_file, "cal")
+        self.parent.draw_results_image(self.current_file)
 
         # Re-enable slider and spinbox
-        self.parent.calibration_tab.cal_results_settings_blur_slider["state"] = "normal"
-        self.parent.calibration_tab.cal_results_settings_blur_spinbox["state"] = "normal"
-        self.parent.calibration_tab.cal_results_settings_noise_slider["state"] = "normal"
-        self.parent.calibration_tab.cal_results_settings_noise_spinbox["state"] = "normal"
+        self.parent.cal_results_settings_blur_slider["state"] = "normal"
+        self.parent.cal_results_settings_blur_spinbox["state"] = "normal"
+        self.parent.cal_results_settings_noise_slider["state"] = "normal"
+        self.parent.cal_results_settings_noise_spinbox["state"] = "normal"
 
         # Calculate remaining images in the background
         for i in self.update_order:
@@ -838,4 +838,4 @@ class NoiseCalculationThread(Thread):
 
                 # Update image if current image is the currently-viewed image (if user changes picture mid-thread)
                 if i == self.calibration.current_viewed_picture:
-                    self.parent.draw_results_image(i, "cal")
+                    self.parent.draw_results_image(i)

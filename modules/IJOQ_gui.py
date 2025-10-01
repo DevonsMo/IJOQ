@@ -326,6 +326,8 @@ class GuiWindow:
             conditional_command = self.calculation_class.go_to_calibration if self.calculation_type == "calibration" \
                 else self.calculation_class.go_to_analysis #TODO integrate better
 
+            conditional_num = 1 if self.calculation_type == "calibration" else 3
+            conditional_num2 = 1 if self.calculation_type == "calibration" else 2
             settings_previous_button = ttk.Button(
                 master=settings_frame,
                 text="Previous",
@@ -337,8 +339,8 @@ class GuiWindow:
                 width=20,
                 state="disabled",
                 command=conditional_command)
-            settings_previous_button.grid(padx=10, pady=10, row=1, column=0, sticky="sw")
-            self.settings_confirm_button.grid(padx=10, pady=10, row=1, column=1, sticky="se")
+            settings_previous_button.grid(padx=10, pady=10, row=conditional_num, column=0, sticky="sw")
+            self.settings_confirm_button.grid(padx=10, pady=10, row=conditional_num, column=conditional_num2, sticky="se")
 
             # ==CALIBRATION:CALIBRATION PAGE==
             calculation_frame.columnconfigure(0, weight=1)
@@ -374,8 +376,6 @@ class GuiWindow:
             calculation_text_scrollbar.grid(row=0, column=1, sticky="ns")
 
             # Add previous and confirm button
-            conditional_num = 2 if self.calculation_type == "calibration" else 3
-            conditional_num2 = 1 if self.calculation_type == "calibration" else 2
             self.calculation_previous_button = ttk.Button(
                 master=calculation_frame,
                 text="Previous",
@@ -388,8 +388,8 @@ class GuiWindow:
                 width=20,
                 state="disabled",
                 command=lambda: self.sub_tabs.select(3))
-            self.calculation_previous_button.grid(padx=10, pady=10, row=conditional_num, column=0, sticky="sw")
-            self.calculation_confirm_button.grid(padx=10, pady=10, row=conditional_num, column=conditional_num2, sticky="se")
+            self.calculation_previous_button.grid(padx=10, pady=10, row=2, column=0, sticky="sw")
+            self.calculation_confirm_button.grid(padx=10, pady=10, row=2, column=1, sticky="se")
 
             # ==CALIBRATION:RESULTS PAGE==
             results_frame.columnconfigure(0, weight=1)
@@ -608,7 +608,7 @@ class GuiWindow:
                 validate="key", validatecommand=validate_command)
             spinbox.bind("<FocusOut>", lambda e: self.sanitize_input(variable_name, is_even, var_type, var_min,
                                                                      var_max))  # TODO Might need to fix...? check variable scope
-            spinbox.bind("<Return>", lambda e: self.root.focus())  # TODO what is e doing?
+            spinbox.bind("<Return>", lambda e: self.parent.root.focus())  # TODO what is e doing?
 
             return spinbox
 
@@ -690,10 +690,10 @@ class GuiWindow:
 
             file_path = filedialog.askopenfilename()
             if file_path:
-                if file_path.lower().endswith(self.valid_image_types):
+                if file_path.lower().endswith(self.parent.valid_image_types):
                     if "Output" not in file_path:
                         # Check current file count
-                        if len(self.input_files) < 99:
+                        if len(self.calculation_class.input_files) < 99:
                             file_name = file_path.split("/")[-1]
                             self.calculation_class.input_files.append(file_path)
                             self.file_list_box.insert(tkinter.END, file_name)
@@ -727,32 +727,33 @@ class GuiWindow:
             """
 
             folder_path = filedialog.askdirectory()
-            if "Output" in folder_path:
-                messagebox.showinfo(
-                    "Output folder selected",
-                    "A possible output folder was selected!\n\nThis program automatically ignores any "
-                    "images saved in a folder containing \"Output\" in its name.")
-            else:
-                file_limit_reached = False
-                for (dirpath, dirnames, filenames) in walk(folder_path):
-                    if "Output" not in dirpath:
-                        for file in filenames:
-                            if file.lower().endswith(self.parent.valid_image_types):
-                                # Check calibration file count
-                                if len(self.calculation_class.input_files) < 99:
-                                    self.calculation_class.input_files.append(dirpath + "/" + file)
-                                    self.file_list_box.insert(tkinter.END, file)
-                                else:
-                                    messagebox.showinfo(
-                                        "File limit reached",
-                                        "You have reached the image file limit!\n\n"
-                                        "The program accepts a maximum of 99 images.")
-                                    file_limit_reached = True
+            if folder_path:
+                if "Output" in folder_path:
+                    messagebox.showinfo(
+                        "Output folder selected",
+                        "A possible output folder was selected!\n\nThis program automatically ignores any "
+                        "images saved in a folder containing \"Output\" in its name.")
+                else:
+                    file_limit_reached = False
+                    for (dirpath, dirnames, filenames) in walk(folder_path):
+                        if "Output" not in dirpath:
+                            for file in filenames:
+                                if file.lower().endswith(self.parent.valid_image_types):
+                                    # Check calibration file count
+                                    if len(self.calculation_class.input_files) < 99:
+                                        self.calculation_class.input_files.append(dirpath + "/" + file)
+                                        self.file_list_box.insert(tkinter.END, file)
+                                    else:
+                                        messagebox.showinfo(
+                                            "File limit reached",
+                                            "You have reached the image file limit!\n\n"
+                                            "The program accepts a maximum of 99 images.")
+                                        file_limit_reached = True
+                                        break
+                                if file_limit_reached:
                                     break
-                            if file_limit_reached:
-                                break
-                    if file_limit_reached:
-                        break
+                        if file_limit_reached:
+                            break
 
             # Enable the confirm files button if there are at least 3 selections for calibration
             # and at least 1 selection for analysis
@@ -853,7 +854,7 @@ class GuiWindow:
 
             # Update text label
             self.results_picture_label.configure(
-                text=self.calculation_type.confirmed_file_names[image_number])
+                text=self.calculation_class.confirmed_file_names[image_number])
 
             # Update image
             self.draw_results_image(image_number)
