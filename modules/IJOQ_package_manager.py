@@ -1,4 +1,5 @@
-from os import path, system, uname, listdir
+from os import path, system, listdir
+from platform import uname
 import sys
 
 def find_os():
@@ -7,7 +8,7 @@ def find_os():
     :return: "Linux", "Windows" or mac (Mac returns the codename for the current Mac version)
     """
 
-    return uname().sysname
+    return uname().system
 
 def send_message(message):
     """
