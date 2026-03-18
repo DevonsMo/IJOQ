@@ -24,6 +24,10 @@ To perform IJOQ analysis on an image or a set of images, go to the "IJOQ analysi
 
 The Simulator script is not intended to be used for analysis and is only included for archival purposes.
 
+# Issues and suggestions
+
+Sometimes, bugs and issues don't get noticed, and sometimes, there are suggestions for improvement. If you have an issue you want to report or a suggestion for how to improve IJOQ, please make a report in the Issues tab on top of the Github page. It helps us keep track of what things we should change for the next versions of IJOQ.
+
 # Uninstalling IJOQ
 
 To uninstall IJOQ, run *IJOQ Installer.py* in the same way that the file was run during setup. The script will ask for a confirmation before uninstalling. Type "uninstall" then press enter to confirm the uninstall. Note that the script will uninstall all required libraries. If other Python projects are present on the computer that use any of these packages, uninstalling may disrupt the functionality of these projects. If this occurs, ensure that the relevant packages are re-installed afterward.
